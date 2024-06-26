@@ -9,6 +9,17 @@ here we see the  meanning of each  command , and what to put command for specifi
 
 
 ```shell
+gcloud auth list
+
+mkdir gcp-course
+
+cd gcp-course
+
+git clone https://GitHub.com/GoogleCloudPlatform/training-data-analyst.git
+
+cd training-data-analyst/courses/design-process/deploying-apps-to-gcp
+
+docker build -t test-python .
 
 ```
 - In Line 1 of quickLabGCP.sh file we confirm gcloud authorize List that confirm that user ID is Current 
@@ -63,7 +74,20 @@ Task 2. Deploy to App Engine
 App Engine is a completely automated deployment platform. It supports many languages, including Python, Java, JavaScript, and Go. To use it, you create a configuration file and deploy your applications with a couple of simple commands. In this task, you create a file named app.yaml and deploy it to App Engine.
 
 ```shell
+cat > app.yaml <<EOF_END
+runtime: python39
+EOF_END
 
+gcloud app create --region=$REGION
+
+gcloud app deploy --version=one --quiet
+
+sed -i '8c\    model = {"title": "Hello App Engine"}' main.py
+
+
+gcloud app deploy --version=two --no-promote --quiet
+
+gcloud app services set-traffic default --splits=two=1 --quiet
 ```
 
 in this below image this is manual process
